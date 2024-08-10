@@ -1,0 +1,213 @@
+syntax = "proto3";
+
+package health_analytics;
+
+option go_package = "genproto/health_analytics";
+
+service HealthAnalyticsService {
+  rpc AddMedicalRecord(AddMedicalRecordRequest) returns (AddMedicalRecordResponse);
+  rpc GetMedicalRecord(GetMedicalRecordRequest) returns (GetMedicalRecordResponse);
+  rpc UpdateMedicalRecord(UpdateMedicalRecordRequest) returns (UpdateMedicalRecordResponse);
+  rpc DeleteMedicalRecord(DeleteMedicalRecordRequest) returns (DeleteMedicalRecordResponse);
+  rpc ListMedicalRecords(ListMedicalRecordsRequest) returns (ListMedicalRecordsResponse);
+  
+  rpc AddLifestyleData(AddLifestyleDataRequest) returns (AddLifestyleDataResponse);
+  rpc GetLifestyleData(GetLifestyleDataRequest) returns (GetLifestyleDataResponse);
+  rpc UpdateLifestyleData(UpdateLifestyleDataRequest) returns (UpdateLifestyleDataResponse);
+  rpc DeleteLifestyleData(DeleteLifestyleDataRequest) returns (DeleteLifestyleDataResponse);
+  
+  rpc AddWearableData(AddWearableDataRequest) returns (AddWearableDataResponse);
+  rpc GetWearableData(GetWearableDataRequest) returns (GetWearableDataResponse);
+  rpc UpdateWearableData(UpdateWearableDataRequest) returns (UpdateWearableDataResponse);
+  rpc DeleteWearableData(DeleteWearableDataRequest) returns (DeleteWearableDataResponse);
+  
+  rpc GenerateHealthRecommendations(GenerateHealthRecommendationsRequest) returns (GenerateHealthRecommendationsResponse);
+  rpc GetRealtimeHealthMonitoring(GetRealtimeHealthMonitoringRequest) returns (stream GetRealtimeHealthMonitoringResponse);
+  rpc GetDailyHealthSummary(GetDailyHealthSummaryRequest) returns (GetDailyHealthSummaryResponse);
+  rpc GetWeeklyHealthSummary(GetWeeklyHealthSummaryRequest) returns (GetWeeklyHealthSummaryResponse);
+}
+
+message MedicalRecord {
+  string id = 1;
+  string user_id = 2;
+  string record_type = 3;
+  string record_date = 4;
+  string description = 5;
+  string doctor_id = 6;
+  repeated string attachments = 7;
+}
+
+message AddMedicalRecordRequest {
+  MedicalRecord record = 1;
+}
+
+message AddMedicalRecordResponse {
+  string record_id = 1;
+}
+
+message GetMedicalRecordRequest {
+  string record_id = 1;
+}
+
+message GetMedicalRecordResponse {
+  MedicalRecord record = 1;
+}
+
+message UpdateMedicalRecordRequest {
+  MedicalRecord record = 1;
+}
+
+message UpdateMedicalRecordResponse {
+  bool success = 1;
+}
+
+message DeleteMedicalRecordRequest {
+  string record_id = 1;
+}
+
+message DeleteMedicalRecordResponse {
+  bool success = 1;
+}
+
+message ListMedicalRecordsRequest {
+  string user_id = 1;
+  int32 page = 2;
+  int32 page_size = 3;
+}
+
+message ListMedicalRecordsResponse {
+  repeated MedicalRecord records = 1;
+  int32 total_count = 2;
+}
+
+message LifestyleData {
+  string id = 1;
+  string user_id = 2;
+  string data_type = 3;
+  bytes data_value = 4;
+  string recorded_date = 5;
+}
+
+message AddLifestyleDataRequest {
+  LifestyleData data = 1;
+}
+
+message AddLifestyleDataResponse {
+  string data_id = 1;
+}
+
+message GetLifestyleDataRequest {
+  string data_id = 1;
+}
+
+message GetLifestyleDataResponse {
+  LifestyleData data = 1;
+}
+
+message UpdateLifestyleDataRequest {
+  LifestyleData data = 1;
+}
+
+message UpdateLifestyleDataResponse {
+  bool success = 1;
+}
+
+message DeleteLifestyleDataRequest {
+  string data_id = 1;
+}
+
+message DeleteLifestyleDataResponse {
+  bool success = 1;
+}
+
+message WearableData {
+  string id = 1;
+  string user_id = 2;
+  string device_type = 3;
+  string data_type = 4;
+  bytes data_value = 5;
+  string recorded_timestamp = 6;
+}
+
+message AddWearableDataRequest {
+  WearableData data = 1;
+}
+
+message AddWearableDataResponse {
+  string data_id = 1;
+}
+
+message GetWearableDataRequest {
+  string data_id = 1;
+}
+
+message GetWearableDataResponse {
+  WearableData data = 1;
+}
+
+message UpdateWearableDataRequest {
+  WearableData data = 1;
+}
+
+message UpdateWearableDataResponse {
+  bool success = 1;
+}
+
+message DeleteWearableDataRequest {
+  string data_id = 1;
+}
+
+message DeleteWearableDataResponse {
+  bool success = 1;
+}
+
+message HealthRecommendation {
+  string id = 1;
+  string user_id = 2;
+  string recommendation_type = 3;
+  string description = 4;
+  int32 priority = 5;
+}
+
+message GenerateHealthRecommendationsRequest {
+  string user_id = 1;
+}
+
+message GenerateHealthRecommendationsResponse {
+  repeated HealthRecommendation recommendations = 1;
+}
+
+message GetRealtimeHealthMonitoringRequest {
+  string user_id = 1;
+}
+
+message GetRealtimeHealthMonitoringResponse {
+  string user_id = 1;
+  string data_type = 2;
+  bytes data_value = 3;
+  string timestamp = 4;
+}
+
+message GetDailyHealthSummaryRequest {
+  string user_id = 1;
+  string date = 2;
+}
+
+message GetDailyHealthSummaryResponse {
+  string user_id = 1;
+  string date = 2;
+  map<string, bytes> summary_data = 3;
+}
+
+message GetWeeklyHealthSummaryRequest {
+  string user_id = 1;
+  string start_date = 2;
+  string end_date = 3;
+}
+
+message GetWeeklyHealthSummaryResponse {
+  string user_id = 1;
+  string start_date = 2;
+  string end_date = 3;
+  map<string, bytes> summary_data = 4;
+}
