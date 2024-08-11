@@ -2,92 +2,106 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "genproto/auth";
+option go_package = "genproto/users";
 
 service AuthService {
-  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
-  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
-  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
-  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
-  rpc LogoutUser(LogoutUserRequest) returns (LogoutUserResponse);
-  rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse);
-  rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse);
+  rpc Register(RegisterRequest) returns (UserResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc GetProfileU(Void) returns (GetProfileResponse);
+  rpc UpdateProfile(UpdateProfileRequestU) returns (UserResponseU);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+}
+service Admin {
+  rpc GetProfile(Id) returns (GetProfileResponse);
+  rpc UpdateProfileA(UpdateProfileRequest) returns (UserResponse);
+  rpc FetchUsers (Filter) returns (UserResponses);
+  rpc DeleteUser (Id) returns (Void);
+
 }
 
-message RegisterUserRequest {
+message Void {}
+message Id{
+  string user_id = 1;
+}
+message RegisterRequest {
   string email = 1;
   string password = 2;
   string first_name = 3;
   string last_name = 4;
-  string date_of_birth = 5;
-  string gender = 6;
+  string phone_number = 5;
+  string role = 6; // Should be 'customer', 'provider', or 'admin'
 }
 
-message RegisterUserResponse {
-  string user_id = 1;
-  string token = 2;
-}
-
-message LoginUserRequest {
-  string email = 1;
-  string password = 2;
-}
-
-message LoginUserResponse {
-  string user_id = 1;
-  string token = 2;
-}
-
-message ValidateTokenRequest {
-  string token = 1;
-}
-
-message ValidateTokenResponse {
-  bool is_valid = 1;
-  string user_id = 2;
-  repeated string roles = 3;
-}
-
-message RefreshTokenRequest {
-  string refresh_token = 1;
-}
-
-message RefreshTokenResponse {
-  string new_token = 1;
-  string new_refresh_token = 2;
-}
-
-message LogoutUserRequest {
-  string user_id = 1;
-  string token = 2;
-}
-
-message LogoutUserResponse {
-  bool success = 1;
-}
-
-message GetUserProfileRequest {
-  string user_id = 1;
-}
-
-message GetUserProfileResponse {
-  string user_id = 1;
+message UserResponse {
+  string id = 1;
   string email = 2;
   string first_name = 3;
   string last_name = 4;
-  string date_of_birth = 5;
-  string gender = 6;
-  repeated string roles = 7;
+  string phone_number = 5;
+  string role = 6; // Should be 'customer', 'provider', or 'admin'
+  string created_at = 7;
+}
+message UserResponseU {
+  string id = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string phone_number = 5;
+  string created_at = 6;
 }
 
-message UpdateUserProfileRequest {
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access = 1;
+  string refresh = 2;
+  string user_id = 3;
+  string role = 4; // Should be 'customer', 'provider', or 'admin'
+}
+
+message LogoutRequest {
   string user_id = 1;
-  optional string first_name = 2;
-  optional string last_name = 3;
-  optional string date_of_birth = 4;
-  optional string gender = 5;
 }
 
-message UpdateUserProfileResponse {
-  bool success = 1;
+message LogoutResponse {
+  string message = 1;
+}
+
+
+
+message GetProfileResponse {
+  string id = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string phone_number = 5;
+  string role = 6; // Should be 'customer', 'provider', or 'admin'
+  string created_at = 7;
+}
+
+message UpdateProfileRequest {
+  string user_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string phone_number = 4;
+  string role = 5; // Should be 'customer', 'provider', or 'admin'
+}
+message UpdateProfileRequestU {
+  string user_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string phone_number = 4;
+}
+
+message Filter {
+  string role = 1;
+  int32 page = 2;
+  int32 limit = 3;
+  string first_name =4;
+}
+message UserResponses{
+  repeated UserResponse users = 1;
 }
