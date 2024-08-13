@@ -22,7 +22,7 @@ service HealthAnalyticsService {
   rpc DeleteWearableData(DeleteWearableDataRequest) returns (DeleteWearableDataResponse);
   
   rpc GenerateHealthRecommendations(GenerateHealthRecommendationsRequest) returns (GenerateHealthRecommendationsResponse);
-  rpc GetRealtimeHealthMonitoring(GetRealtimeHealthMonitoringRequest) returns (stream GetRealtimeHealthMonitoringResponse);
+  rpc GetRealtimeHealthMonitoring(GetRealtimeHealthMonitoringRequest) returns (GetRealtimeHealthMonitoringResponse);
   rpc GetDailyHealthSummary(GetDailyHealthSummaryRequest) returns (GetDailyHealthSummaryResponse);
   rpc GetWeeklyHealthSummary(GetWeeklyHealthSummaryRequest) returns (GetWeeklyHealthSummaryResponse);
   
