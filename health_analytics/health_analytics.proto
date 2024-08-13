@@ -7,33 +7,28 @@ option go_package = "genproto/health_analytics";
 service HealthAnalyticsService {
   rpc AddMedicalRecord(AddMedicalRecordRequest) returns (AddMedicalRecordResponse);
   rpc GetMedicalRecord(GetMedicalRecordRequest) returns (GetMedicalRecordResponse);
-  
-  rpc AddLifestyleData(AddLifestyleDataRequest) returns (AddLifestyleDataResponse);
-  rpc GetLifestyleData(GetLifestyleDataRequest) returns (GetLifestyleDataResponse);
-  
-  rpc AddWearableData(AddWearableDataRequest) returns (AddWearableDataResponse);
-  rpc GetWearableData(GetWearableDataRequest) returns (GetWearableDataResponse);
-  
-  rpc GenerateHealthRecommendations(GenerateHealthRecommendationsRequest) returns (GenerateHealthRecommendationsResponse);
-  rpc GetRealtimeHealthMonitoring(GetRealtimeHealthMonitoringRequest) returns (stream GetRealtimeHealthMonitoringResponse);
-  
-  
-}
-
-service AdminHealthAnalyticsService {
   rpc UpdateMedicalRecord(UpdateMedicalRecordRequest) returns (UpdateMedicalRecordResponse);
   rpc DeleteMedicalRecord(DeleteMedicalRecordRequest) returns (DeleteMedicalRecordResponse);
   rpc ListMedicalRecords(ListMedicalRecordsRequest) returns (ListMedicalRecordsResponse);
   
+  rpc AddLifestyleData(AddLifestyleDataRequest) returns (AddLifestyleDataResponse);
+  rpc GetLifestyleData(GetLifestyleDataRequest) returns (GetLifestyleDataResponse);
   rpc UpdateLifestyleData(UpdateLifestyleDataRequest) returns (UpdateLifestyleDataResponse);
   rpc DeleteLifestyleData(DeleteLifestyleDataRequest) returns (DeleteLifestyleDataResponse);
   
+  rpc AddWearableData(AddWearableDataRequest) returns (AddWearableDataResponse);
+  rpc GetWearableData(GetWearableDataRequest) returns (GetWearableDataResponse);
   rpc UpdateWearableData(UpdateWearableDataRequest) returns (UpdateWearableDataResponse);
   rpc DeleteWearableData(DeleteWearableDataRequest) returns (DeleteWearableDataResponse);
   
+  rpc GenerateHealthRecommendations(GenerateHealthRecommendationsRequest) returns (GenerateHealthRecommendationsResponse);
+  rpc GetRealtimeHealthMonitoring(GetRealtimeHealthMonitoringRequest) returns (stream GetRealtimeHealthMonitoringResponse);
   rpc GetDailyHealthSummary(GetDailyHealthSummaryRequest) returns (GetDailyHealthSummaryResponse);
   rpc GetWeeklyHealthSummary(GetWeeklyHealthSummaryRequest) returns (GetWeeklyHealthSummaryResponse);
+  
 }
+
+
 message MedicalRecord {
   string id = 1;
   string user_id = 2;
