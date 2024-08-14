@@ -26,8 +26,6 @@ service HealthAnalyticsService {
   rpc GetDailyHealthSummary(GetDailyHealthSummaryRequest) returns (GetDailyHealthSummaryResponse);
   rpc GetWeeklyHealthSummary(GetWeeklyHealthSummaryRequest) returns (GetWeeklyHealthSummaryResponse);
   
-}
-service HealthMonitoring{
   rpc GetHealthMonitor(UserId) returns (GetHealthMonitorsRes);
 }
 
